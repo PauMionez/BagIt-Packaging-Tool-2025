@@ -1,0 +1,7 @@
+python38.zip
+.
+bagitlib\
+site-packages\
+
+# Uncomment to run site.main() automatically
+#import site

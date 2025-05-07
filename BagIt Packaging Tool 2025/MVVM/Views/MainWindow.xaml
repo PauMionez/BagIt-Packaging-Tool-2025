@@ -1,0 +1,118 @@
+﻿<ui:FluentWindow
+    x:Class="BagIt_Packaging_Tool_2025.MVVM.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BagIt_Packaging_Tool_2025"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vm="clr-namespace:BagIt_Packaging_Tool_2025.MVVM.ViewModels"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    Width="800"
+    Height="450"
+    Background="{ui:ThemeResource}"
+    SnapsToDevicePixels="True"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <ui:FluentWindow.DataContext>
+        <vm:MainViewModel />
+    </ui:FluentWindow.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ui:TitleBar Title="{Binding Path=Title}" Grid.Row="0" />
+
+        <Grid Grid.Row="1">
+            <!--  Main Content Area  -->
+            <StackPanel Orientation="Vertical" Margin="20">
+                <StackPanel Margin="50,0,50,0" Height="150" VerticalAlignment="Top" Width="300">
+                    <Rectangle  AllowDrop="True" 
+                                 Fill="#FF2D2D2D" 
+                                 RadiusX="10"
+                                 RadiusY="10"
+                                 StrokeDashArray="8"
+                                 StrokeThickness="2"
+                                 StrokeDashCap="Round"
+                                 Stroke="LightGray"
+                                 Height="150"
+                                 Width="300">
+                    </Rectangle>
+                    <StackPanel Margin="0 -110 0 0" AllowDrop="True">
+                        <ui:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE898;" Foreground="White" FontSize="50" />
+                        <TextBlock Text="Drop File" HorizontalAlignment="Center" Foreground="White" FontWeight="DemiBold" />
+                    </StackPanel>
+                    <dx:Interaction.Behaviors>
+                        <dx:EventToCommand EventName="Drop" 
+                            Command="{Binding DropFileCommand}" 
+                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Data, Mode=TwoWay}"
+                            PassEventArgsToCommand="True"/>
+                    </dx:Interaction.Behaviors>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical">
+                    <ui:TextBlock
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         FontSize="12"
+                         Margin="10"
+                         Text="{Binding Path=FileFullPath}" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <ui:Button
+                                 Padding="20"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Command="{Binding Path=TestCommand}"
+                                 Content="Create BagIt"
+                                 FontSize="24" />
+                        <ComboBox Width="70" Height="50" Margin="3 0 0 0"
+                                  ItemsSource="{Binding Path=ArchiveOptions}"
+                                  SelectedItem="{Binding Path=SelectedOption, Mode=TwoWay}" />
+                    </StackPanel>
+
+
+
+
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Background="#80808080" Visibility="{Binding Path=IsOnProcess, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ui:TextBlock
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      FontSize="24"
+                      Foreground="White"
+                      Text="{Binding Path=IsProcessMessage}" >
+                    <ui:TextBlock.Effect>
+                        <DropShadowEffect Direction="200" BlurRadius="3" ShadowDepth="2"/>
+                    </ui:TextBlock.Effect>
+                </ui:TextBlock>
+                <ui:ProgressRing
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      IsIndeterminate="True"   
+                      Foreground="White"
+                      Visibility="{Binding Path=IsOnProcess, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      Width="50"
+                      Height="50"
+                      Margin="10">
+
+                    <ui:ProgressRing.Effect>
+                        <DropShadowEffect Direction="200" BlurRadius="3" ShadowDepth="2"/>
+                    </ui:ProgressRing.Effect>
+                </ui:ProgressRing>
+
+            </StackPanel>
+            
+        </Grid>
+
+    </Grid>
+</ui:FluentWindow>
