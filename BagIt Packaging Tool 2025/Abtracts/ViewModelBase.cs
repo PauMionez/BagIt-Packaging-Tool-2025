@@ -12,7 +12,7 @@ namespace BagIt_Packaging_Tool_2025.Abtracts
 {
     abstract class ViewModelBase : BindableBase
     {
-        private string ApplicationName => "BagIt Packaging Tool 2025";
+        private string ApplicationName => "c";
         private Version Version => new Version(1, 0);
 
         public string Title => $"{ApplicationName} v{Version}";

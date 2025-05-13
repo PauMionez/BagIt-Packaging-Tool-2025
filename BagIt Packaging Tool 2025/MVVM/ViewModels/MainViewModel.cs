@@ -211,7 +211,7 @@ namespace BagIt_Packaging_Tool_2025.MVVM.ViewModels
             try
             {
                 // Generate a timestamp-based filename with the correct extension (.zip or .tar)
-                //string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+                
                 string extension = type == ArchiveType.Zip ? "zip" : "tar";
                 string archiveFileName = $"{filename}.{extension}";
                 string archiveFilePath = Path.Combine(outputPath, archiveFileName);
